@@ -1,0 +1,10 @@
+---
+galaxy_info:
+  author: Ann Arbor District Library
+  description: Chrome installation and policy management
+  license: GPLv3
+
+  platforms:
+  - name: Ubuntu
+    versions:
+    - xenial
