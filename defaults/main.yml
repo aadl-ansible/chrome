@@ -1,0 +1,29 @@
+chrome_release_channel: 'stable'
+
+# Option to manage Chrome policies
+chrome_policies: false
+chrome_policies_managed: []
+chrome_policies_recommended: []
+chrome_policies_filename: 'preferences.json'
+
+# Some default scripts for kiosk type setups
+chrome_kiosk: false
+chrome_kiosk_policies:
+  AllowFileSelectionDialogs: false
+  AudioCaptureAllowed: false
+  AudioOutputAllowed: false
+  AutoFillEnabled: false
+  BookmarkBarEnabled: false
+  BrowserAddPersonEnabled: false
+  DeveloperToolsDisabled: true
+  ForceMaximizeOnFirstRun: true
+  HideWebStoreIcon: true
+  PasswordManagerEnabled: false
+  ShowHomeButton: true
+  SigninAllowed: false
+  SyncDisabled: true
+
+chrome_printing_disabled: false
+chrome_printing_policies:
+  DisablePrintPreview: true
+  PrintingEnabled: false
