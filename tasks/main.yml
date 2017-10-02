@@ -10,7 +10,27 @@
     state: present
     filename: 'google-chrome'
     update_cache: yes
-- name: Ensure Google chrome stable is installed
+- name: Ensure Google chrome is installed
   apt:
-    name: google-chrome-stable
+    name: "google-chrome-{{ chrome_release_channel }}"
     state: present
+
+# We will create the directories but don't remove in case manually created
+- name: Create chrome policy directories if needed
+  file:
+    path: /etc/opt/chrome/policies/{{ item }}
+    state: directory
+    mode: 0755
+  with_items:
+    - managed
+    - recommended
+  when: chrome_policies or chrome_kiosk or chrome_printing_disabled
+
+# Policy Installation
+- import_tasks: policies.yml
+
+# Kiosk Setup
+- import_tasks: kiosk.yml
+
+# Printing Setup
+- import_tasks: printing.yml
