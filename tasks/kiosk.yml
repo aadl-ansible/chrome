@@ -1,0 +1,13 @@
+---
+- name: Set Chrome kiosk policies
+  copy:
+    dest: /etc/opt/chrome/policies/managed/kiosk.json
+    mode: 0644
+    content: '{{ chrome_kiosk_policies|to_nice_json }}'
+  when: chrome_kiosk
+  
+- name: Make sure chrome kiosk policies are removed if not managed
+  file:
+    path: /etc/opt/chrome/policies/managed/kiosk.json
+    state: absent
+  when: not chrome_kiosk

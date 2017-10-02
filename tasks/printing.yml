@@ -1,0 +1,12 @@
+- name: Set Chrome printing policies
+  copy:
+    dest: /etc/opt/chrome/policies/managed/printing.json
+    mode: 0644
+    content: '{{ chrome_printing_policies|to_nice_json }}'
+  when: chrome_printing_disabled
+  
+- name: Make sure chrome printing policies are removed if not managed
+  file:
+    path: /etc/opt/chrome/policies/managed/printing.json
+    state: absent
+  when: not chrome_printing_disabled
