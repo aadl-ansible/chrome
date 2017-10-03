@@ -22,6 +22,7 @@ chrome_kiosk_policies:
   ShowHomeButton: true
   SigninAllowed: false
   SyncDisabled: true
+chrome_homepage: 'https://www.google.com'
 
 chrome_printing_disabled: false
 chrome_printing_policies:

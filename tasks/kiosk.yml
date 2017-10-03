@@ -7,8 +7,8 @@
   when: chrome_kiosk
 
 - name: Copy kiosk chrome launcher
-  copy:
-    src: chrome-kiosk.sh
+  template:
+    src: chrome-kiosk.sh.j2
     dest: /usr/bin/chrome-kiosk
     mode: a+x
   when: chrome_kiosk
