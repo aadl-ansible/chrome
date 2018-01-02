@@ -1,3 +1,5 @@
+# Options are chrome or chromium
+chrome_browser: 'chrome'
 chrome_release_channel: 'stable'
 
 # Option to manage Chrome policies

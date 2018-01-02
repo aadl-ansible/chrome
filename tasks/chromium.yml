@@ -1,0 +1,15 @@
+- name: Ensure chromium is installed
+  apt:
+    name: "chromium-browser"
+    state: present
+
+    # We will create the directories but don't remove in case manually created
+- name: Create chrome policy directories if needed
+  file:
+    path: /etc/chromium/policies/{{ item }}
+    state: directory
+    mode: 0755
+  with_items:
+    - managed
+    - recommended
+  when: chrome_policies or chrome_kiosk or chrome_printing_disabled

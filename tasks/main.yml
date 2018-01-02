@@ -1,30 +1,10 @@
 ---
-# Chrome Installation
-- name: Ensure Google signing key is present
-  apt_key:
-    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
-    state: present
-- name: Ensure Google chrome repository exists
-  apt_repository:
-    repo: 'deb http://dl.google.com/linux/chrome/deb/ stable main'
-    state: present
-    filename: 'google-chrome'
-    update_cache: yes
-- name: Ensure Google chrome is installed
-  apt:
-    name: "google-chrome-{{ chrome_release_channel }}"
-    state: present
+# chrome is only available as 64bit
+- include_tasks: chrome.yml
+  when: chrome_browser == 'chrome' and ansible_architecture == 'x86_64'
 
-# We will create the directories but don't remove in case manually created
-- name: Create chrome policy directories if needed
-  file:
-    path: /etc/opt/chrome/policies/{{ item }}
-    state: directory
-    mode: 0755
-  with_items:
-    - managed
-    - recommended
-  when: chrome_policies or chrome_kiosk or chrome_printing_disabled
+- include_tasks: chromium.yml
+  when: chrome_browser == 'chromium' or ansible_architecture == 'i386'
 
 # Policy Installation
 - import_tasks: policies.yml
