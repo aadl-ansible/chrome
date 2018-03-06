@@ -25,6 +25,7 @@ chrome_kiosk_policies:
   SigninAllowed: false
   SyncDisabled: true
 chrome_homepage: 'https://www.google.com'
+chrome_kiosk_resolution: '1024x768'
 chrome_kiosk_launch_options: '--incognito --no-first-run --kiosk --disable-sync --disable-notifications -user-data-dir=/tmp/chrome'
 
 chrome_printing_disabled: false

@@ -3,5 +3,5 @@
 # We use incognito mode so things aren't saved by default
 # We also set the user directory to /tmp so if anything manages to get saved a reboot will wipe
 export DISPLAY=:0.0
-xrandr --dpi 96
+xrandr -s {{ chrome_kiosk_resolution }}
 google-chrome {{ chrome_kiosk_launch_options }} {{ chrome_homepage }}
