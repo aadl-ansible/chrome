@@ -2,6 +2,8 @@
 - name: Set policy fact for run
   set_fact:
     policy_path: /etc/opt/chrome/policies
+    chrome_kiosk_binary: google-chrome
+    
 # Chrome Installation
 - name: Ensure Google signing key is present
   apt_key:
