@@ -1,12 +1,15 @@
+- name: Set policy fact for run
+  set_fact:
+    policy_path: /etc/chromium/policies
 - name: Ensure chromium is installed
   apt:
-    name: "chromium-browser"
+    name: chromium-browser
     state: present
 
     # We will create the directories but don't remove in case manually created
 - name: Create chrome policy directories if needed
   file:
-    path: /etc/chromium/policies/{{ item }}
+    path: '{{ policy_path }}/{{ item }}'
     state: directory
     mode: 0755
   with_items:

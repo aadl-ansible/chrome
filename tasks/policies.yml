@@ -1,7 +1,7 @@
 ---
 - name: Create Chrome policy files if needed
   copy:
-    dest: /etc/opt/chrome/policies/{{ item.key }}/{{ chrome_policies_filename }}
+    dest: '{{ policy_path }}/{{ item.key }}/{{ chrome_policies_filename }}'
     mode: 0644
     content: '{{ item.value|to_nice_json }}'
   when: 
@@ -13,7 +13,7 @@
 
 - name: Delete policy file if no policies are defined
   file:
-    path: /etc/opt/chrome/policies/{{ item.key }}/{{ chrome_policies_filename }}
+    path: '{{ policy_path }}/{{ item.key }}/{{ chrome_policies_filename }}'
     state: absent
   when: item.value|length == 0
   with_dict:
@@ -22,7 +22,7 @@
 
 - name: Delete policy files if they are no longer managed by role
   file:
-    path: /etc/opt/chrome/policies/{{ item.key }}/{{ chrome_policies_filename }}
+    path: '{{ policy_path }}/{{ item.key }}/{{ chrome_policies_filename }}'
     state: absent
   when: not chrome_policies
   with_dict:

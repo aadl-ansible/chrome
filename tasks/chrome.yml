@@ -1,4 +1,7 @@
 ---
+- name: Set policy fact for run
+  set_fact:
+    policy_path: /etc/opt/chrome/policies
 # Chrome Installation
 - name: Ensure Google signing key is present
   apt_key:
@@ -18,7 +21,7 @@
 # We will create the directories but don't remove in case manually created
 - name: Create chrome policy directories if needed
   file:
-    path: /etc/opt/chrome/policies/{{ item }}
+    path: '{{ policy_path }}/{{ item }}'
     state: directory
     mode: 0755
   with_items:
