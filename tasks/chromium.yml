@@ -2,7 +2,7 @@
   set_fact:
     policy_path: /etc/chromium/policies
     chrome_kiosk_binary: chromium-browser
-    
+
 - name: Ensure chromium is installed
   apt:
     name: chromium-browser

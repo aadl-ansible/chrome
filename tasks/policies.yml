@@ -4,7 +4,7 @@
     dest: '{{ policy_path }}/{{ item.key }}/{{ chrome_policies_filename }}'
     mode: 0644
     content: '{{ item.value|to_nice_json }}'
-  when: 
+  when:
     - item.value|length > 0
     - chrome_policies|bool
   with_dict:
