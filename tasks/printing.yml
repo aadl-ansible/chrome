@@ -3,10 +3,10 @@
     dest: '{{ policy_path }}/managed/printing.json'
     mode: 0644
     content: '{{ chrome_printing_policies|to_nice_json }}'
-  when: chrome_printing_disabled
+  when: chrome_printing_disabled|bool
   
 - name: Make sure chrome printing policies are removed if not managed
   file:
     path: '{{ policy_path }}/managed/printing.json'
     state: absent
-  when: not chrome_printing_disabled
+  when: not chrome_printing_disabled|bool

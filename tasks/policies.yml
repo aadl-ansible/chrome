@@ -6,7 +6,7 @@
     content: '{{ item.value|to_nice_json }}'
   when: 
     - item.value|length > 0
-    - chrome_policies
+    - chrome_policies|bool
   with_dict:
     managed: '{{ chrome_policies_managed }}'
     recommended: '{{ chrome_policies_recommended }}'
@@ -24,7 +24,7 @@
   file:
     path: '{{ policy_path }}/{{ item.key }}/{{ chrome_policies_filename }}'
     state: absent
-  when: not chrome_policies
+  when: not chrome_policies|bool
   with_dict:
     managed: '{{ chrome_policies_managed }}'
     recommended: '{{ chrome_policies_recommended }}'

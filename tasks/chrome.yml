@@ -29,4 +29,4 @@
   with_items:
     - managed
     - recommended
-  when: chrome_policies or chrome_kiosk or chrome_printing_disabled
+  when: chrome_policies|bool or chrome_kiosk|bool or chrome_printing_disabled|bool
