@@ -3,10 +3,21 @@
     policy_path: /etc/chromium/policies
     chrome_kiosk_binary: chromium-browser
 
+- name: Use PPA to avoid ubuntu using a snap package
+  apt_repository:
+    repo: 'ppa:phd/chromium-browser'
+    update_cache: yes
+
+- name: Pin chromium packages to PPA
+  copy:
+    src: phd-chromium-browser
+    dest: /etc/apt/preferences.d/phd-chromium-browser
+
 - name: Ensure chromium is installed
   apt:
     name: chromium-browser
     state: present
+    cache_valid_time: 3600
 
     # We will create the directories but don't remove in case manually created
 - name: Create chrome policy directories if needed
