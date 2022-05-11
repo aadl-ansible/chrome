@@ -1,6 +1,6 @@
 ---
 - name: Create Chrome policy files if needed
-  copy:
+  ansible.builtin.copy:
     dest: '{{ policy_path }}/{{ item.key }}/{{ chrome_policies_filename }}'
     mode: 0644
     content: '{{ item.value|to_nice_json }}'
@@ -12,7 +12,7 @@
     recommended: '{{ chrome_policies_recommended }}'
 
 - name: Delete policy file if no policies are defined
-  file:
+  ansible.builtin.file:
     path: '{{ policy_path }}/{{ item.key }}/{{ chrome_policies_filename }}'
     state: absent
   when: item.value|length == 0
@@ -21,10 +21,23 @@
     recommended: '{{ chrome_policies_recommended }}'
 
 - name: Delete policy files if they are no longer managed by role
-  file:
+  ansible.builtin.file:
     path: '{{ policy_path }}/{{ item.key }}/{{ chrome_policies_filename }}'
     state: absent
   when: not chrome_policies|bool
   with_dict:
     managed: '{{ chrome_policies_managed }}'
     recommended: '{{ chrome_policies_recommended }}'
+
+- name: Set Chrome kiosk policies
+  ansible.builtin.copy:
+    dest: '{{ policy_path }}/managed/kiosk.json'
+    mode: 0644
+    content: '{{ chrome_kiosk_policies|to_nice_json }}'
+  when: chrome_kiosk|bool
+
+- name: Make sure chrome kiosk policies are removed if not managed
+  ansible.builtin.file:
+    path: '{{ policy_path }}s/managed/kiosk.json'
+    state: absent
+  when: not chrome_kiosk|bool
