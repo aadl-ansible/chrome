@@ -19,6 +19,7 @@
   apt:
     name: "google-chrome-{{ chrome_release_channel }}"
     state: present
+    cache_valid_time: 3600
 
 # We will create the directories but don't remove in case manually created
 - name: Create chrome policy directories if needed
