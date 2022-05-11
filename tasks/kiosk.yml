@@ -1,20 +1,53 @@
 ---
-- name: Set Chrome kiosk policies
-  copy:
-    dest: '{{ policy_path }}/managed/kiosk.json'
-    mode: 0644
-    content: '{{ chrome_kiosk_policies|to_nice_json }}'
-  when: chrome_kiosk|bool
+# Use a very basic window manager and login manager
+# idesk is needed for doing a desktop icon
+- name: install xorg and window managers
+  ansible.builtin.apt:
+    name: '{{ chrome_kiosk_wm_packages }}'
+    state: present
+    cache_valid_time: 3600
 
-- name: Copy kiosk chrome launcher
-  template:
-    src: chrome-kiosk.sh.j2
-    dest: /usr/bin/chrome-kiosk
-    mode: a+x
-  when: chrome_kiosk|bool
+- name: install extra fonts
+  ansible.builtin.apt:
+    name: '{{ chrome_kiosk_fonts }}'
+    state: present
+    cache_valid_time: 3600
 
-- name: Make sure chrome kiosk policies are removed if not managed
-  file:
-    path: '{{ policy_path }}s/managed/kiosk.json'
-    state: absent
-  when: not chrome_kiosk|bool
+# We want to auto login to openbox
+- name: set autologin for slim
+  ansible.builtin.lineinfile:
+    dest: /etc/slim.conf
+    regexp: "^auto_login "
+    insertafter: "^#auto_login "
+    line: "auto_login yes"
+- name: set default username for slim
+  ansible.builtin.lineinfile:
+    dest: /etc/slim.conf
+    regexp: "^default_user "
+    insertafter: "^#default_user "
+    line: "default_user {{ ansible_user }}"
+- name: remove xsession directory from slim
+  ansible.builtin.lineinfile:
+    dest: /etc/slim.conf
+    regexp: "^sessiondir "
+    line: "#sessiondir "
+    backrefs: yes
+
+# Copy over a basic menu which just lets staff reboot the machine
+- name: copy openbox menu config
+  ansible.builtin.copy:
+    src: openbox/menu.xml
+    dest: /etc/xdg/openbox/menu.xml
+
+# Copy over a stripped down version of openbox keyboard/mouse config
+# Disables multiple desktops and their shortcuts
+- name: copy openbox mapping config
+  ansible.builtin.copy:
+    src: openbox/rc.xml
+    dest: /etc/xdg/openbox/rc.xml
+
+# Set openbox to disable screen blanking and launch chrome on boot
+- name: copy openbox autostart
+  ansible.builtin.copy:
+    src: openbox/autostart.sh
+    dest: /etc/xdg/openbox/autostart

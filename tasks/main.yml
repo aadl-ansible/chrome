@@ -1,4 +1,6 @@
 ---
+# Kiosk Setup
+- import_tasks: kiosk.yml
 # chrome is only available as 64bit
 - include_tasks: chrome.yml
   when: chrome_browser == 'chrome' and ansible_architecture == 'x86_64'
@@ -8,9 +10,6 @@
 
 # Policy Installation
 - import_tasks: policies.yml
-
-# Kiosk Setup
-- import_tasks: kiosk.yml
 
 # Printing Setup
 - import_tasks: printing.yml
