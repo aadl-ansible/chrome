@@ -3,32 +3,48 @@ chrome_browser: 'chrome'
 chrome_release_channel: 'stable'
 
 # Option to manage Chrome policies
-chrome_policies: false
+chrome_policies: true
 chrome_policies_managed: []
 chrome_policies_recommended: []
 chrome_policies_filename: 'preferences.json'
 
 # Some default scripts for kiosk type setups
-chrome_kiosk: false
+chrome_kiosk: true
 chrome_kiosk_policies:
   AllowFileSelectionDialogs: false
   AudioCaptureAllowed: false
   AudioOutputAllowed: false
-  AutoFillEnabled: false
+  AutofillAddressEnabled: false
+  AutofillCreditCardEnabled: false
   BookmarkBarEnabled: false
   BrowserAddPersonEnabled: false
-  DeveloperToolsDisabled: true
+  BrowserSignin: 0
+  DeveloperToolsAvailability: 2
   ForceMaximizeOnFirstRun: true
   HideWebStoreIcon: true
   PasswordManagerEnabled: false
   ShowHomeButton: true
   SigninAllowed: false
   SyncDisabled: true
-chrome_homepage: 'https://www.google.com'
+chrome_homepage: 'https://aadl.org'
 chrome_kiosk_resolution: '1024x768'
-chrome_kiosk_launch_options: '--incognito --no-first-run --kiosk --disable-sync --disable-notifications -user-data-dir=/tmp/chrome'
-
-chrome_printing_disabled: false
+chrome_kiosk_launch_options: '--incognito --no-first-run --start-maximized --disable-sync --disable-notifications -user-data-dir=/tmp/chrome'
+chrome_kiosk_wm_packages:
+  - xserver-xorg-core
+  - xserver-xorg-input-libinput
+  - xserver-xorg-input-mouse
+  - xserver-xorg-input-evdev
+  - openbox
+  - slim
+  - idesk
+  - fbpanel
+chrome_kiosk_fonts:
+  - 'fonts-arphic-ukai'
+  - 'fonts-arphic-uming'
+  - 'fonts-ipafont-gothic'
+  - 'fonts-ipafont-mincho'
+  - 'fonts-unfonts-core'
+chrome_printing_disabled: true
 chrome_printing_policies:
   DisablePrintPreview: true
   PrintingEnabled: false
